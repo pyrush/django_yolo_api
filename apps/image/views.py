@@ -1,10 +1,6 @@
-from audioop import reverse
 import io
-import os
 from PIL import Image as im
-from django.http import HttpResponseRedirect
 import torch
-
 
 from django.shortcuts import render
 from django.views.generic.edit import CreateView
@@ -28,12 +24,14 @@ class UploadImage(CreateView):
             img_instance.save()
 
             uploaded_img_qs = ImageModel.objects.filter().last()
-
             img_bytes = uploaded_img_qs.image.read()
             img = im.open(io.BytesIO(img_bytes))
 
-            model = torch.hub.load(r'/home/ram/Py_Prac_WSL/django_yolo_api/yolov5_code', 'custom',
-                                   path=r'/home/ram/Py_Prac_WSL/django_yolo_api/yolov5_code/weights/yolov5s.pt', source='local')
+            path_hubconfig = "absolute/path/to/yolov5_code"
+            path_weightfile = "absolute/path/to/yolov5s.pt"  # or any custom trained model
+
+            model = torch.hub.load(path_hubconfig, 'custom',
+                                   path=path_weightfile, source='local')
 
             results = model(img, size=640)
             results.render()
@@ -52,9 +50,7 @@ class UploadImage(CreateView):
 
         else:
             form = ImageUploadForm()
-
         context = {
             "form": form
         }
-
         return render(request, 'image/imagemodel_form.html', context)

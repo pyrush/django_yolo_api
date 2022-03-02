@@ -139,3 +139,5 @@ build_test.sh
 
 # PyCharm configuration
 .idea/
+
+*.jpg
