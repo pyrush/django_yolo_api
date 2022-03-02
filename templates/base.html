@@ -1,0 +1,85 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  {% block page_meta %}
+  {% endblock page_meta %}
+
+  {# Vendor styles #}
+  {% block vendor_css %}
+    <link rel="stylesheet" type="text/css" media="all" href="{% static 'css/vendor/bootstrap.min.css' %}" />
+  {% endblock vendor_css %}
+
+  {# Global styles #}
+  {% block site_css %}
+    <link rel="stylesheet" type="text/css" media="all" href="{% static 'css/styles/style.css' %}" />
+  {% endblock site_css %}
+
+  {# Page-specific styles #}
+  {% autoescape off %}
+    {% block on_page_css %}
+    
+    {% endblock on_page_css %}
+  {% endautoescape %}
+
+  {% block extra_head %}
+    {# Extra header stuff (scripts, styles, metadata, etc) #}
+  {% endblock extra_head %}
+
+  <title>{% block page_title %}Home{% endblock page_title %}</title>
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+{% include "partials/_nav.html" %}
+
+  <div class="container mt-4">  
+    {% if messages %}
+      {% for message in messages %}
+        <div class="message">
+          <div class="alert alert-{{ message.tags }} message" id="djangoMessage">
+            {{ message }}
+            <button type="button" class="close" aria-label="Close" data-dismiss="message">
+              <span aria-hidden="true" id="messageDialogCloseBtn">&times;</span></button>       
+          </div>
+        </div>    
+      {% endfor %}
+    {% endif %}
+<div class="container">
+  <div class="row">
+    {% block leftbar %}
+
+    {% endblock leftbar %}
+
+    {% block content %}
+        {# Page content will go here #}
+    {% endblock content %}
+  </div>
+  {# Modal HTML #}
+  {% block modals %}
+  {% endblock modals %}
+</div>
+{% block vendor_js %}
+  {% include 'partials/_scripts.html' %}  
+{% endblock vendor_js %}
+
+{% block site_js %}
+  <script src="{% static 'js/main.js' %}"></script>
+{% endblock site_js %}
+
+{# Shared data for javascript #}
+{% block shared_data %}
+
+{% endblock shared_data %}
+
+{% block on_page_ajax %}
+
+{% endblock on_page_ajax %}
+
+{% autoescape off %}
+  {% block on_page_js %}
+  {% endblock on_page_js %}
+{% endautoescape %}
+</body>
+</html>

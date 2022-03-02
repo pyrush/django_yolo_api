@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block leftbar %}
+    <div class="col-sm-3">
+
+    </div>
+{% endblock leftbar %} 
+
+
+{% block content %}
+    <div class="col-sm-9">
+        <div id="uploadedImage"></div>
+            <div class="mt-4">
+                <form action="" enctype="multipart/form-data" id="imageUploadForm" method="post"> 
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button class="btn btn-outline-success" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+        <div class="mt-4">
+            {% if inference_img %}
+                <img src="{{inference_img}}" class="img-fluid" />
+            {% else %}
+                The inferenced image will be displayed here.
+            {% endif %}
+        </div>    
+    </div>
+{% endblock content %}
+
